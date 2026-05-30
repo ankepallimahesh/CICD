@@ -1,4 +1,4 @@
-name: 'Production deployment'
+name: Production deployment
 
 concurrency: 1
 
@@ -11,18 +11,18 @@ on:
 
 jobs:
   deploy:
-    name: 'Deploy bundle'
+    name: Deploy bundle
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: databricks/setup-cli@main
+      - name: Setup Databricks CLI
+        uses: databricks/setup-cli@main
 
-      - run: databricks bundle deploy
+      - name: Deploy Databricks Bundle
         working-directory: CICD
+        run: databricks bundle deploy -t prod
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: prod
-
-      
